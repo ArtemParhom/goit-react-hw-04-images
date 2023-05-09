@@ -3,7 +3,7 @@ import Searchbar from './searchbar/Searchbar';
 import ImageGallery from './imageGallery/ImageGallery';
 import Button from './button/Button';
 import Loader from './loader/Loader';
-import { Modal } from './modal/Modal';
+import Modal from './modal/Modal';
 import { useEffect, useState } from 'react';
 import Notiflix from 'notiflix';
 
@@ -21,15 +21,6 @@ export default function App() {
   const [image, setImage] = useState('');
   const [alt, setAlt] = useState('');
 
-  useEffect(() => {
-    if (inputValue.trim() === '') {
-      return;
-    }
-    setArrayImages([]);
-    setPage(1);
-    setTotalPage(1);
-  }, [inputValue]);
-
   const getPixabayApi = (value, page) => {
     const urlParams = new URLSearchParams({
       q: value,
@@ -40,6 +31,31 @@ export default function App() {
       per_page: Pixabay_PER_PAGE,
     });
     return fetch(`${Pixabay_URL}&${urlParams}`);
+  };
+
+  const handelSubmit = inputValue => {
+    if (inputValue.trim() === '') {
+      Notiflix.Notify.failure('схоже що ви ввели пробіли замість cлова');
+      return;
+    }
+    setPage(1);
+    setInputValue(inputValue);
+  };
+
+  const loadMore = () => {
+    setPage(prevState => prevState + 1);
+  };
+
+  const openModal = (image, alt) => {
+    setModal(!modal);
+    setImage(image);
+    setAlt(alt);
+  };
+
+  const closeModal = () => {
+    setModal(!modal);
+    setImage('');
+    setAlt('');
   };
 
   useEffect(() => {
@@ -63,30 +79,6 @@ export default function App() {
     };
     fetchImage(inputValue);
   }, [inputValue, page]);
-
-  const handelSubmit = inputValue => {
-    if (inputValue.trim() === '') {
-      Notiflix.Notify.failure('схоже що ви ввели пробіли замість cлова');
-      return;
-    }
-    setInputValue(inputValue);
-  };
-
-  const loadMore = () => {
-    setPage(prevState => prevState + 1);
-  };
-
-  const openModal = (image, alt) => {
-    setModal(!modal);
-    setImage(image);
-    setAlt(alt);
-  };
-
-  const closeModal = () => {
-    setModal(!modal);
-    setImage('');
-    setAlt('');
-  };
 
   return (
     <div className={css.App}>
