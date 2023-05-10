@@ -40,6 +40,8 @@ export default function App() {
     }
     setPage(1);
     setInputValue(inputValue);
+    setArrayImages([]);
+    setTotalPage(1);
   };
 
   const loadMore = () => {
