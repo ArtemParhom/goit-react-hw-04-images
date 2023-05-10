@@ -44,6 +44,8 @@ export default function App() {
     setTotalPage(1);
   };
 
+  //
+
   const loadMore = () => {
     setPage(prevState => prevState + 1);
   };
