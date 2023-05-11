@@ -38,13 +38,11 @@ export default function App() {
       Notiflix.Notify.failure('схоже що ви ввели пробіли замість cлова');
       return;
     }
-    setPage(1);
-    setInputValue(inputValue);
     setArrayImages([]);
     setTotalPage(1);
+    setPage(1);
+    setInputValue(inputValue);
   };
-
-  //
 
   const loadMore = () => {
     setPage(prevState => prevState + 1);
