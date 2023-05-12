@@ -1,18 +1,21 @@
 import css from './Modal.module.css';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
-export default function Modal({ closeModal, src, alt }) {
-  const clickEsc = evn => {
-    if (evn.code === `Escape`) {
-      closeModal();
-      removeEventList();
-    }
-  };
-  window.addEventListener('keydown', clickEsc);
-  const removeEventList = () => {
-    window.removeEventListener(`keydown`, clickEsc);
-    return;
-  };
+const Modal = ({ closeModal, src, alt }) => {
+  useEffect(() => {
+    const clickEsc = evn => {
+      if (evn.code === `Escape`) {
+        closeModal();
+        removeEventList();
+      }
+    };
+    window.addEventListener('keydown', clickEsc);
+    const removeEventList = () => {
+      window.removeEventListener(`keydown`, clickEsc);
+      return;
+    };
+  });
   return (
     <div
       className={css.Overlay}
@@ -27,10 +30,11 @@ export default function Modal({ closeModal, src, alt }) {
       </div>
     </div>
   );
-}
+};
 
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
 };
+export default Modal;
